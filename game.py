@@ -3,9 +3,9 @@ from rich import print
 import random
 
 # colors used
-# red
-# bright_cyan
-# light_green
+# red: actions and enemy
+# bright_cyan: stats
+# light_green: items
 
 # base set up
 left = ["left", "Left", "L", "l"]
@@ -14,6 +14,8 @@ yes = ["Y", "y", "yes"]
 no = ["N", "n", "no"]
 inside = ["I", "i", "Inside", "inside"]
 outside = ["O", "o", "Outside", "outside"]
+
+# player class to hold properties and handle increases
 
 
 class Player:
@@ -27,13 +29,14 @@ class Player:
             print(f'Attack power increased to: {self.attack}')
         else:
             print('You already picked up the astroblaster')
-    
+
     def add_health(self):
         if self.health == 100:
             self.health += 30
             print(f'Health increased to: {self.health}')
         else:
             print('You already picked up the food')
+
 
 def start():
     answer = input('Want to play?(yes/no)')
@@ -49,6 +52,7 @@ increased_player_attack = False
 increased_player_health = False
 
 player = Player()
+
 
 def intro():
     print('[red]💥💥CRASHING NOISES💥💥[/red]')
@@ -69,9 +73,6 @@ def intro():
 
         player.add_attack()
         increased_player_attack == True
-
-# function to add health to player when astro blaster is discovered, need to find spot for it
-
         ship()
     else:
         explore()
@@ -110,7 +111,7 @@ def explore():
 def mountain():
     print('You set off on your hike to the mountain range. The loose mounds of sand slow you down, but you are determined to find water. After what felt like a never ending trek, you finally make it to the base of the closest mountain. You scan your surroundings and spot a green patch of grass and trees. You head towards it and being to hear running water. FINALLY! You run to it and rapidly scoop handfuls of water to your mouth.')
     print('After you quench your thirst, you take in your surroundings. The river flows down from the mountain and curves away from you. The trees provide a little bit of shade, which is definetly better than standing out in the heat. You notice some small bushes around you and see small pops of red in them.')
-    
+
     print('[bright_cyan]🍗FOOD🍗 added to inventory[/bright_cyan]')
     player.inventory.append('food')
     print(f'[bright_cyan]Inventory: {player.inventory}[/bright_cyan]')
@@ -118,11 +119,13 @@ def mountain():
     increased_player_health == True
 
     print('You pick the berries and gobble them down. You walk to a nearby ledge and peer off into the distance. You see the wreckage of your ship of in the distance and the entrance to the cave. You contemplate how draining the trek would be to the cave. You turn around and look up towards the peak of the mountain and see a steady pillar of smoke.')
-    choice4 = input('Head left to the cave or travel right to the mountain peak?(L/R)')
+    choice4 = input(
+        'Head left to the cave or travel right to the mountain peak?(L/R)')
     if choice4.lower() in left:
         cave()
     else:
         mountain_peak()
+
 
 def mountain_peak():
     print('You gather your strength and start the trek to the peak of the mountain. The closer you get, you smell burning meat and perhaps spices? You continue hiking and begin to hear conversations and music. You finally make it to the top and see a very small village, comprised of maybe ten people.')
@@ -140,9 +143,10 @@ def cave():
     player.inventory.append('flashlight')
     print(f'[bright_cyan]Inventory: {player.inventory}[/bright_cyan]')
     print('You flick the switch and nothing happens. You bang the flashlight on your hand a few times and the flashlight slowly emits a warm beam of light. You scan the entrance of the cave with your newly found flashlight and only see sand, rocks, and a tunnel. The tunnel turns to the right after 30ft, so it\'s hard to see what the tunnel could lead to.')
-    choice5 = input('Go down the tunnel or turn around?(Inside/Outside)')
+    choice5 = input(
+        'Go down the tunnel or turn around?(Inside/Outside)')
     if choice5.lower() in inside:
-        print('You slowly proceed down the tunnel and try to make the least amount of noise possible.')
+        print('You slowly proceed down the tunnel and try to make the least amount of noise possible. ')
         creature()
     else:
         print('You decide that the cave is too spooky and you quickly walk out of the cave. The mountain is at least closer to you now, so you decide it will be worthwhile to check it out. Your stomach grumbles again and you hope that you can possibly find some kind of food.')
@@ -152,45 +156,57 @@ def cave():
 
 
 def creature():
-    print('creature description')
-    choice6 = input('approach creature or leave?(Inside/Outside)')
+    print('You wander down the tunnel until you see a small, hunched over creature that seems to be gnawing on an animal carcass')
+    choice6 = input(
+        'Do you approach creature or leave?(Inside/Outside)')
     if choice6.lower() in inside:
-        print('player approaches the creature')
+        print('You carefully creep up towards the grayish, scaly being. You\'re just starting to contemplate what you will actually do when you reach the creature... But then it suddenly whips arround and begins to growl at you.')
         approach()
     else:
-        print('player leaves the cave')
+        print('You decide that the cave is too spooky and you quickly walk out of the cave. The mountain is at least closer to you now, so you decide it will be worthwhile to check it out. Your stomach grumbles again and you hope that you can possibly find some kind of food.')
         # add function for ending w/o fighting creature
 
 ############################################  APPROACH  ##########################################################
 
 
 def approach():
-    print('approach story')
+    print('You decide to fight the creature. You are starving, desperate, and afraid of what will happen if you turn around to flee.')
     # random number for enemy health with varying probabilities
-    enemyHealth = [75, 80, 85, 90, 100]
-    enemy = random.choices(enemyHealth, weights=(10, 30, 20, 30, 10), k=1)
-    print('[red]The enemy\'s heatlh is [/red]', enemy)
+    global enemy_calchealth
+    enemy_health = [75, 80, 85, 90, 100, 110]
+    enemy_calchealth = random.choices(
+        enemy_health, weights=(5, 30, 20, 30, 10, 5), k=1)
+    print(f'[red]The enemy\'s health is {enemy_calchealth}[/red]')
+    global enemy_calcattack
+    # random number for enemy attack with varying probabilities
+    enemy_attack = [15, 20, 25, 30, 35, 40]
+    enemy_calcattack = random.choices(
+        enemy_attack, weights=(5, 30, 20, 30, 10, 5), k=1)
+    print(f'[red]The enemy\'s attack power is {enemy_calcattack}[/red]')
+    # print correct stats based on chosen path
     if increased_player_health == True:
         print(f'[bright_cyan]Your health is {player.add_health}[/bright_cyan]')
     else:
         print(f'[bright_cyan]Your health is {player.health}[/bright_cyan]')
     if increased_player_attack == True:
-        print(f'[bright_cyan]Your attack power is {player.add_attack}[/bright_cyan]')
+        print(
+            f'[bright_cyan]Your attack power is {player.add_attack}[/bright_cyan]')
     else:
-        print(f'[bright_cyan]Your attack power is {player.attack}[/bright_cyan]')
+        print(
+            f'[bright_cyan]Your attack power is {player.attack}[/bright_cyan]')
+
+# create a function for enemy v player that accounts for increased stats and if health is <= 0
+# def fight():
+#     if enemyHealth <= 100:
+#         print('enemy loses')
+#     else:
+#         print('enemy wins')
+
 
 def sent_home():
     print('home story')
 
 # add functions for live and die endings
 
-    # flip() the display to put your work on screen
-    # pygame.display.flip()
-
-    # clock.tick(60)  # limits FPS to 60
-
-
-# pygame.quit()
 
 start()
-

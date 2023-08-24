@@ -19,5 +19,5 @@ To install and play SpaceCrash, all you need to do is clone this repository and 
 
 ## Contact
 
-- Find me on GitHub: melissahookey
+- Find me on GitHub: [melissahookey](https://github.com/melissahookey)
 - Email me with any questions or suggestions: melissah315@gmail.com
