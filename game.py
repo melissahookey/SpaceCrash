@@ -15,13 +15,10 @@ no = ["N", "n", "no"]
 inside = ["I", "i", "Inside", "inside"]
 outside = ["O", "o", "Outside", "outside"]
 
-# player class to hold properties and handle increases
-
 
 class Player:
     inventory = []
     health = 100
-    attack = 30
 
     def add_attack(self):
         if self.attack == 30:
@@ -30,12 +27,28 @@ class Player:
         else:
             print('You already picked up the astroblaster')
 
+    attack = 30
+
     def add_health(self):
         if self.health == 100:
             self.health += 30
             print(f'Health increased to: {self.health}')
         else:
             print('You already picked up the food')
+
+# this isn't working and I want to kms
+# class Creature:
+#     enemy_health = [75, 80, 85, 90, 100, 110]
+
+#     def creature_health_gen(self):
+#         self.enemy_health_calc = random.choices(
+#             self.enemy_health, weights=(5, 30, 20, 30, 10, 5), k=1)
+
+#     enemy_attack = [15, 20, 25, 30, 35, 40]
+
+#     def creature_attack_gen(self):
+#         self.enemy_attack_calc = random.choices(
+#             self.enemy_attack, weights=(5, 30, 20, 30, 10, 5), k=1)
 
 
 def start():
@@ -52,6 +65,7 @@ increased_player_attack = False
 increased_player_health = False
 
 player = Player()
+creature = Creature()
 
 
 def intro():
@@ -85,7 +99,7 @@ def ship():
         'Continue to dig through the ship rubble or head back outside?(Inside/Outside)')
     if choice2.lower() in inside:
         print('You decide to rummage through the rubble to see if you can find anything else that may be useful. You look around and spot large chucks of what used to be the shell of your high tech spaceship. You walk over and begin digging in the hot sand. Sweat is building on your forehead and your fingers start to go numb.')
-        # add method for flashlight or battery drop
+        # add method for flashlight or battery drop?? flashlight already in cave()
         explore()
     else:
         print('You take one last, long look at what remains of your spaceship. The sand is starting to feel hot through your space boots and you need to get out of this heat.')
@@ -168,21 +182,24 @@ def creature():
 
 ############################################  APPROACH  ##########################################################
 
+# this works but I can't use it for the fight function
+
 
 def approach():
     print('You decide to fight the creature. You are starving, desperate, and afraid of what will happen if you turn around to flee.')
     # random number for enemy health with varying probabilities
-    global enemy_calchealth
     enemy_health = [75, 80, 85, 90, 100, 110]
     enemy_calchealth = random.choices(
         enemy_health, weights=(5, 30, 20, 30, 10, 5), k=1)
-    print(f'[red]The enemy\'s health is {enemy_calchealth}[/red]')
-    global enemy_calcattack
+    creature.creature_health_gen()
+    print(f'[red]The enemy\'s health is {creature.creature_health_calc}[/red]')
     # random number for enemy attack with varying probabilities
     enemy_attack = [15, 20, 25, 30, 35, 40]
     enemy_calcattack = random.choices(
         enemy_attack, weights=(5, 30, 20, 30, 10, 5), k=1)
-    print(f'[red]The enemy\'s attack power is {enemy_calcattack}[/red]')
+    creature.creature_attack_gen()
+    print(
+        f'[red]The enemy\'s attack power is {creature.creature_attack_calc}[/red]')
     # print correct stats based on chosen path
     if increased_player_health == True:
         print(f'[bright_cyan]Your health is {player.add_health}[/bright_cyan]')
@@ -194,13 +211,21 @@ def approach():
     else:
         print(
             f'[bright_cyan]Your attack power is {player.attack}[/bright_cyan]')
+    # fight()
 
 # create a function for enemy v player that accounts for increased stats and if health is <= 0
+
+
 # def fight():
-#     if enemyHealth <= 100:
-#         print('enemy loses')
+#     choice7 = input('Take first swing? (Y/N)')
+#     if choice7.lower() in yes:
+#         creature.enemy_health_calc - player.add_attack
+#         print(
+#             f'The creature took {player.add_attack} damage. Their health is now {creature.enemy_calchealth}')
 #     else:
-#         print('enemy wins')
+#         creature.enemy_health_calc - player.attack
+#         print(
+#             f'The creature took {player.attack} damage. Their health is now {creature.enemy_health_calc}')
 
 
 def sent_home():
