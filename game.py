@@ -19,36 +19,45 @@ outside = ["O", "o", "Outside", "outside"]
 class Player:
     inventory = []
     health = 100
+    attack = 30
 
     def add_attack(self):
         if self.attack == 30:
             self.attack += 10
             print(f'Attack power increased to: {self.attack}')
+            int(self.attack)
         else:
             print('You already picked up the astroblaster')
-
-    attack = 30
 
     def add_health(self):
         if self.health == 100:
             self.health += 30
             print(f'Health increased to: {self.health}')
+            int(self.health)
         else:
             print('You already picked up the food')
 
 # this isn't working and I want to kms
-# class Creature:
-#     enemy_health = [75, 80, 85, 90, 100, 110]
 
-#     def creature_health_gen(self):
-#         self.enemy_health_calc = random.choices(
-#             self.enemy_health, weights=(5, 30, 20, 30, 10, 5), k=1)
 
-#     enemy_attack = [15, 20, 25, 30, 35, 40]
+enemy_health = [75, 80, 85, 90, 100, 110]
+enemy_attack = [15, 20, 25, 30, 35, 40]
 
-#     def creature_attack_gen(self):
-#         self.enemy_attack_calc = random.choices(
-#             self.enemy_attack, weights=(5, 30, 20, 30, 10, 5), k=1)
+
+def creature_health_gen():
+    global new_health
+    new_health = (random.choices(
+        enemy_health, weights=(5, 30, 20, 30, 10, 5), k=1))
+    return new_health
+    print(new_health)
+
+
+def creature_attack_gen():
+    global new_attack
+    new_attack = random.choices(
+        enemy_attack, weights=(5, 30, 20, 30, 10, 5), k=1)
+    return new_attack
+    print(new_attack)
 
 
 def start():
@@ -65,7 +74,6 @@ increased_player_attack = False
 increased_player_health = False
 
 player = Player()
-creature = Creature()
 
 
 def intro():
@@ -161,7 +169,7 @@ def cave():
         'Go down the tunnel or turn around?(Inside/Outside)')
     if choice5.lower() in inside:
         print('You slowly proceed down the tunnel and try to make the least amount of noise possible. ')
-        creature()
+        encounter()
     else:
         print('You decide that the cave is too spooky and you quickly walk out of the cave. The mountain is at least closer to you now, so you decide it will be worthwhile to check it out. Your stomach grumbles again and you hope that you can possibly find some kind of food.')
         mountain()
@@ -169,7 +177,7 @@ def cave():
 ############################################  CREATURE MEET   ###################################################
 
 
-def creature():
+def encounter():
     print('You wander down the tunnel until you see a small, hunched over creature that seems to be gnawing on an animal carcass')
     choice6 = input(
         'Do you approach creature or leave?(Inside/Outside)')
@@ -178,6 +186,7 @@ def creature():
         approach()
     else:
         print('You decide that the cave is too spooky and you quickly walk out of the cave. The mountain is at least closer to you now, so you decide it will be worthwhile to check it out. Your stomach grumbles again and you hope that you can possibly find some kind of food.')
+        mountain()
         # add function for ending w/o fighting creature
 
 ############################################  APPROACH  ##########################################################
@@ -187,45 +196,61 @@ def creature():
 
 def approach():
     print('You decide to fight the creature. You are starving, desperate, and afraid of what will happen if you turn around to flee.')
-    # random number for enemy health with varying probabilities
-    enemy_health = [75, 80, 85, 90, 100, 110]
-    enemy_calchealth = random.choices(
-        enemy_health, weights=(5, 30, 20, 30, 10, 5), k=1)
-    creature.creature_health_gen()
-    print(f'[red]The enemy\'s health is {creature.creature_health_calc}[/red]')
-    # random number for enemy attack with varying probabilities
-    enemy_attack = [15, 20, 25, 30, 35, 40]
-    enemy_calcattack = random.choices(
-        enemy_attack, weights=(5, 30, 20, 30, 10, 5), k=1)
-    creature.creature_attack_gen()
-    print(
-        f'[red]The enemy\'s attack power is {creature.creature_attack_calc}[/red]')
+    print('[red]Enemy\'s health is:[/red]')
+    creature_health_gen()
+    print('[red]Enemy\'s attack power is:[/red]')
+    creature_attack_gen()
     # print correct stats based on chosen path
     if increased_player_health == True:
-        print(f'[bright_cyan]Your health is {player.add_health}[/bright_cyan]')
+        player.add_health()
     else:
         print(f'[bright_cyan]Your health is {player.health}[/bright_cyan]')
     if increased_player_attack == True:
-        print(
-            f'[bright_cyan]Your attack power is {player.add_attack}[/bright_cyan]')
+        player.add_attack()
     else:
         print(
             f'[bright_cyan]Your attack power is {player.attack}[/bright_cyan]')
-    # fight()
+    fight()
 
 # create a function for enemy v player that accounts for increased stats and if health is <= 0
 
 
-# def fight():
-#     choice7 = input('Take first swing? (Y/N)')
-#     if choice7.lower() in yes:
-#         creature.enemy_health_calc - player.add_attack
-#         print(
-#             f'The creature took {player.add_attack} damage. Their health is now {creature.enemy_calchealth}')
-#     else:
-#         creature.enemy_health_calc - player.attack
-#         print(
-#             f'The creature took {player.attack} damage. Their health is now {creature.enemy_health_calc}')
+def fight():
+    if increased_player_health == True:
+        # list out each hit from enemy
+        if new_attack == 15:
+            player.heatlh == 115
+            print(f'You took {new_attack} damage')
+            print(f'Your health is now {player.health}')
+        elif new_attack == 20:
+            player.heatlh == 110
+            print(f'You took {new_attack} damage')
+            print(f'Your health is now {player.health}')
+        elif new_attack == 25:
+            player.heatlh == 105
+            print(f'You took {new_attack} damage')
+            print(f'Your health is now {player.health}')
+        elif new_attack == 30:
+            player.heatlh == 100
+            print(f'You took {new_attack} damage')
+            print(f'Your health is now {player.health}')
+        elif new_attack == 25:
+            player.heatlh == 95
+            print(f'You took {new_attack} damage')
+            print(f'Your health is now {player.health}')
+        else:
+            player.heatlh == 90
+        print(f'You took {new_attack} damage')
+        print(f'Your health is now {player.health}')
+    else:
+        print('insert')
+    if increased_player_attack == True:
+        if new_attack == 40:
+            print('same')
+        else:
+            print('player has higher attack')
+    else:
+        print('player has higher attack')
 
 
 def sent_home():
