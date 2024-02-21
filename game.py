@@ -7,7 +7,7 @@ import random
 # bright_cyan: stats
 # light_green: items
 
-# base set up
+# player input
 left = ["left", "Left", "L", "l"]
 right = ["right", "Right", "R", "r"]
 yes = ["Y", "y", "yes"]
@@ -71,7 +71,7 @@ increased_player_attack = False
 increased_player_health = False
 
 def intro():
-    print('[red]💥💥CRASHING NOISES💥💥[/red]')
+    print('[red b]💥💥CRASHING NOISES💥💥[/red b]')
     print('You wake up still strapped into your seat and slowly open your eyes. You take in the mangled mess of a spaceship around you. You reach down and struggle to unbuckle yourself. Everything in your body aches from the intense impact.')
     print('You were able to eject your seat from the ship and somehow survived. You slowly rise to your feet and see a vast, dry desert all around you. There are bits and pieces of your ship wedged in the mounds of sand.')
     print(f'[bright_cyan]Health: {player.health}[/bright_cyan]')
@@ -145,7 +145,7 @@ def mountain():
 
 def mountain_peak():
     print('You gather your strength and start the trek to the peak of the mountain. The closer you get, you smell burning meat and perhaps spices? You continue hiking and begin to hear conversations and music. You finally make it to the top and see a very small village, comprised of maybe ten people.')
-    print('You make some lound walking sounds and slowly approach, to ensure that you don\'t scare the villagers. The biggest villager turns and stares you down. You slowly raise your hands and take a knee in the dirt, to communicate that you are not a threat.')
+    print('You make some loud walking sounds and slowly approach, to ensure that you don\'t scare the villagers. The biggest villager turns and stares you down. You slowly raise your hands and take a knee in the dirt, to communicate that you are not a threat.')
     print('Another villager steps out from behind the large villager. She approaches you and says: "You look lost. Let us hear your story."')
     print('You detail your crash and how you\'ve been wandering around this unknown area, looking for a way to get home. She takes your hand and says: "I understand. We can send you home if you wish." You nod your head and begin to feel light and bubbly before you lose consciousness')
     sent_home()
@@ -190,9 +190,9 @@ def encounter():
 
 def approach():
     print('You decide to fight the creature. You are starving, desperate, and afraid of what will happen if you turn around to flee.')
-    print('[red]Enemy\'s health is:[/red]')
+    print("[red]Enemy\'s health is: [/red]", new_health)
     Traits.creature_health_gen()
-    print('[red]Enemy\'s attack power is:[/red]')
+    print("[red]Enemy\'s attack is: [/red]", new_attack)
     Traits.creature_attack_gen()
     # print correct stats based on chosen path
     if increased_player_health == True:
