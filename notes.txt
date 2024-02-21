@@ -1,0 +1,3 @@
+- changed the class structure for player and enemy to combine under Traits
+    - now random enemy health and attack power works
+    * need to now add function for combat that uses enemy and players attack power and health
