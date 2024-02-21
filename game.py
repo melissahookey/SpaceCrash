@@ -7,7 +7,7 @@ import random
 # bright_cyan: stats
 # light_green: items
 
-# base set up
+# player input
 left = ["left", "Left", "L", "l"]
 right = ["right", "Right", "R", "r"]
 yes = ["Y", "y", "yes"]
@@ -16,10 +16,11 @@ inside = ["I", "i", "Inside", "inside"]
 outside = ["O", "o", "Outside", "outside"]
 
 
-class Player:
-    inventory = []
-    health = 100
-    attack = 30
+class Traits():
+    def __init__(self, health, attack, inventory):
+        self.health = health
+        self.attack = attack
+        self.inventory = inventory
 
     def add_attack(self):
         if self.attack == 30:
@@ -37,25 +38,29 @@ class Player:
         else:
             print('You already picked up the food')
 
-# this isn't working and I want to kms
+    def creature_health_gen():
+        global enemy_health
+        enemy_health = [75, 80, 85, 90, 100, 110]
+        global new_health
+        new_health = (random.choices(
+            enemy_health, weights=(5, 30, 20, 30, 10, 5), k=1))
+        return (new_health)
+    creature_health_gen()
+
+    def creature_attack_gen():
+        global enemy_attack
+        enemy_attack = [15, 20, 25, 30, 35, 40]
+        global new_attack
+        new_attack = random.choices(
+            enemy_attack, weights=(5, 30, 20, 30, 10, 5), k=1)
+        return (new_attack)
+    creature_attack_gen()
 
 
-enemy_health = [75, 80, 85, 90, 100, 110]
-enemy_attack = [15, 20, 25, 30, 35, 40]
-
-
-def creature_health_gen():
-    global new_health
-    new_health = (random.choices(
-        enemy_health, weights=(5, 30, 20, 30, 10, 5), k=1))
-    return new_health
-
-
-def creature_attack_gen():
-    global new_attack
-    new_attack = random.choices(
-        enemy_attack, weights=(5, 30, 20, 30, 10, 5), k=1)
-    return new_attack
+global player
+player = Traits(100, 30, [])
+global enemy
+enemy = Traits((new_health), (new_attack), [])
 
 
 def start():
@@ -70,8 +75,6 @@ def start():
 ############################################  INTRODUCTION   ######################################################
 increased_player_attack = False
 increased_player_health = False
-
-player = Player()
 
 
 def intro():
@@ -195,9 +198,9 @@ def encounter():
 def approach():
     print('You decide to fight the creature. You are starving, desperate, and afraid of what will happen if you turn around to flee.')
     print("[red]Enemy\'s health is: [/red]", new_health)
-    creature_health_gen()
+    Traits.creature_health_gen()
     print("[red]Enemy\'s attack is: [/red]", new_attack)
-    creature_attack_gen()
+    Traits.creature_attack_gen()
     # print correct stats based on chosen path
     if increased_player_health == True:
         player.add_health()
