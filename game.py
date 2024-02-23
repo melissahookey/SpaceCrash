@@ -2,11 +2,6 @@
 from rich import print
 import random
 
-# colors used
-# red: actions and enemy
-# bright_cyan: stats
-# light_green: items
-
 # player input
 left = ["left", "Left", "L", "l"]
 right = ["right", "Right", "R", "r"]
@@ -15,6 +10,7 @@ no = ["N", "n", "no"]
 inside = ["I", "i", "Inside", "inside"]
 outside = ["O", "o", "Outside", "outside"]
 
+# player and enemy set up
 class Traits():
     def __init__(self, health, attack, inventory):
         self.health = health
@@ -37,7 +33,6 @@ class Traits():
         else:
             print('You already picked up the food')
 
-
     global enemy_health
     enemy_health = [75, 80, 85, 90, 100, 110]
     global enemy_attack
@@ -47,15 +42,20 @@ class Traits():
         global new_health
         new_health = (random.choices(
             enemy_health, weights=(5, 30, 20, 30, 10, 5), k=1))
-        print (new_health)
+        print(f'[red]Enemy health: {new_health}[/red]')
     
     def creature_attack_gen():
         global new_attack
         new_attack = random.choices(
             enemy_attack, weights=(5, 30, 20, 30, 10, 5), k=1)
-        print (new_attack)
+        print(f'[red]Enemy attack: {new_attack}[/red]')
 
 player = Traits(100, 30, [])
+
+# global increased_player_attack
+# increased_player_attack = False
+# global increased_player_health
+# increased_player_health = False 
 
 def start():
     answer = input('Want to play?(yes/no)')
@@ -65,10 +65,7 @@ def start():
     else:
         print('See ya')
 
-
-############################################  INTRODUCTION   ######################################################
-increased_player_attack = False
-increased_player_health = False
+# INTRO
 
 def intro():
     print('[red b]💥💥CRASHING NOISES💥💥[/red b]')
@@ -86,15 +83,12 @@ def intro():
         print('[light_green]✨ASTRO BLASTER✨[/light_green] added to inventory')
         player.inventory.append('astro blaster')
         print(f'[bright_cyan]Inventory: {player.inventory}[/bright_cyan]')
-
         player.add_attack()
-        increased_player_attack == True
         ship()
     else:
         explore()
 
-############################################  SHIP   ##########################################################
-
+# SHIP
 
 def ship():
     choice2 = input(
@@ -107,8 +101,7 @@ def ship():
         print('You take one last, long look at what remains of your spaceship. The sand is starting to feel hot through your space boots and you need to get out of this heat.')
         explore()
 
-############################################  EXPLORE   ##########################################################
-
+# EXPLORE
 
 def explore():
     print('You take a deep breath and scan yourself for injuries. You seem to be physically ok, but your memory is still foggy. To your left you see a mountain range about 1 mile away, to your right you see a cave about 2 miles away. The moutain might have running water, but the cave will sheild you from the unbearable heat.')
@@ -121,8 +114,7 @@ def explore():
         print('Sweat rolls down your back and your skin is already burning. You decide to seek shade in the cave.')
         cave()
 
-############################################  MOUNTAIN   ##########################################################
-
+# MOUNTAIN
 
 def mountain():
     print('You set off on your hike to the mountain range. The loose mounds of sand slow you down, but you are determined to find water. After what felt like a never ending trek, you finally make it to the base of the closest mountain. You scan your surroundings and spot a green patch of grass and trees. You head towards it and being to hear running water. FINALLY! You run to it and rapidly scoop handfuls of water to your mouth.')
@@ -132,7 +124,6 @@ def mountain():
     player.inventory.append('food')
     print(f'[bright_cyan]Inventory: {player.inventory}[/bright_cyan]')
     player.add_health()
-    increased_player_health == True
 
     print('You pick the berries and gobble them down. You walk to a nearby ledge and peer off into the distance. You see the wreckage of your ship of in the distance and the entrance to the cave. You contemplate how draining the trek would be to the cave. You turn around and look up towards the peak of the mountain and see a steady pillar of smoke.')
     choice4 = input(
@@ -142,6 +133,7 @@ def mountain():
     else:
         mountain_peak()
 
+# MOUNTAIN PEAK
 
 def mountain_peak():
     print('You gather your strength and start the trek to the peak of the mountain. The closer you get, you smell burning meat and perhaps spices? You continue hiking and begin to hear conversations and music. You finally make it to the top and see a very small village, comprised of maybe ten people.')
@@ -150,8 +142,7 @@ def mountain_peak():
     print('You detail your crash and how you\'ve been wandering around this unknown area, looking for a way to get home. She takes your hand and says: "I understand. We can send you home if you wish." You nod your head and begin to feel light and bubbly before you lose consciousness')
     sent_home()
 
-############################################  CAVE   ##########################################################
-
+# CAVE
 
 def cave():
     print('You walk into the entrance of the cave and see an old, damaged flashlight on the ground.')
@@ -168,8 +159,7 @@ def cave():
         print('You decide that the cave is too spooky and you quickly walk out of the cave. The mountain is at least closer to you now, so you decide it will be worthwhile to check it out. Your stomach grumbles again and you hope that you can possibly find some kind of food.')
         mountain()
 
-############################################  CREATURE MEET   ###################################################
-
+# MEET CREATURE
 
 def encounter():
     print('You wander down the tunnel until you see a small, hunched over creature that seems to be gnawing on an animal carcass')
@@ -183,74 +173,67 @@ def encounter():
         mountain()
         # add function for ending w/o fighting creature
 
-############################################  APPROACH  ##########################################################
-
-# this works but I can't use it for the fight function
-
+# APPROACH CREATURE
 
 def approach():
     print('You decide to fight the creature. You are starving, desperate, and afraid of what will happen if you turn around to flee.')
-    print("[red]Enemy\'s health is: [/red]", new_health)
     Traits.creature_health_gen()
-    print("[red]Enemy\'s attack is: [/red]", new_attack)
+    # print("[red]Enemy\'s attack is: [/red]")
     Traits.creature_attack_gen()
     # print correct stats based on chosen path
-    if increased_player_health == True:
-        player.add_health()
-    else:
-        print(f'[bright_cyan]Your health is {player.health}[/bright_cyan]')
-    if increased_player_attack == True:
-        player.add_attack()
-    else:
-        print(
-            f'[bright_cyan]Your attack power is {player.attack}[/bright_cyan]')
-    fight()
+    # if increased_player_health :player.add_health()
+    # else:
+    #     print(f'[bright_cyan]Your health is {player.health}[/bright_cyan]')
+    # if increased_player_attack : player.add_attack()
+    # else:
+    #     print(
+    #         f'[bright_cyan]Your attack power is {player.attack}[/bright_cyan]')
+    # fight()
 
 # create a function for enemy v player that accounts for increased stats and if health is <= 0
 
+# FIGHT CREATURE
 
-def fight():
-    if increased_player_health == True:
-        # list out each hit from enemy
-        if new_attack == 15:
-            player.heatlh == 115
-            print(f'You took {new_attack} damage')
-            print(f'Your health is now {player.health}')
-        elif new_attack == 20:
-            player.heatlh == 110
-            print(f'You took {new_attack} damage')
-            print(f'Your health is now {player.health}')
-        elif new_attack == 25:
-            player.heatlh == 105
-            print(f'You took {new_attack} damage')
-            print(f'Your health is now {player.health}')
-        elif new_attack == 30:
-            player.heatlh == 100
-            print(f'You took {new_attack} damage')
-            print(f'Your health is now {player.health}')
-        elif new_attack == 25:
-            player.heatlh == 95
-            print(f'You took {new_attack} damage')
-            print(f'Your health is now {player.health}')
-        else:
-            player.heatlh == 90
-        print(f'You took {new_attack} damage')
-        print(f'Your health is now {player.health}')
-    else:
-        print('insert')
-    if increased_player_attack == True:
-        if new_attack == 40:
-            print('same')
-        else:
-            print('player has higher attack')
-    else:
-        print('player has higher attack')
+# def fight():
+#     if increased_player_health == True:
+#         # list out each hit from enemy
+#         if new_attack == 15:
+#             player.heatlh == 115
+#             print(f'You took {new_attack} damage')
+#             print(f'Your health is now {player.health}')
+#         elif new_attack == 20:
+#             player.heatlh == 110
+#             print(f'You took {new_attack} damage')
+#             print(f'Your health is now {player.health}')
+#         elif new_attack == 25:
+#             player.heatlh == 105
+#             print(f'You took {new_attack} damage')
+#             print(f'Your health is now {player.health}')
+#         elif new_attack == 30:
+#             player.heatlh == 100
+#             print(f'You took {new_attack} damage')
+#             print(f'Your health is now {player.health}')
+#         elif new_attack == 25:
+#             player.heatlh == 95
+#             print(f'You took {new_attack} damage')
+#             print(f'Your health is now {player.health}')
+#         else:
+#             player.heatlh == 90
+#         print(f'You took {new_attack} damage')
+#         print(f'Your health is now {player.health}')
+#     else:
+#         print('insert')
+#     if increased_player_attack == True:
+#         if new_attack == 40:
+#             print('same')
+#         else:
+#             print('player has higher attack')
+#     else:
+#         print('player has higher attack')
 
 
 def sent_home():
     print('home story')
-
 # add functions for live and die endings
-
 
 start()
