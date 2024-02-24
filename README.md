@@ -17,10 +17,13 @@ Welcome to SpaceCrash! This is a text-based adventure game that I created to tea
 
 - Python3
 - [Rich](https://github.com/Textualize/rich)
+- [Numpy](https://numpy.org/)
 
 ## Installation
 
-To install and play SpaceCrash, all you need to do is clone this repository and open up the python file in your terminal.
+Download via [itch.io](https://melissahookey.itch.io/spacecrash)
+or
+Clone this repository, open in your preferred code editor, and run the command 'python3 game.py' in your terminal to start the game!
 
 ## Contact
 
