@@ -29,12 +29,10 @@ class Traits():
             print('You already picked up the astroblaster')
 
     def add_health(self):
-        if self.health == 100:
+            self.health == 100
             self.health += 30
             print(f'Health increased to: {self.health}')
             int(self.health)
-        else:
-            print('You already picked up the food')
 
     global enemy_health
     enemy_health = [75, 80, 85, 90, 100, 110]
@@ -199,23 +197,32 @@ def fight():
             global p_result
             p_result = np.subtract(player.health,new_attack)
             print(f'The creature hit you! Your health is now: {p_result}')
-            fight2()
+            leave()
         else: print('You decide that you are in no state to fight an unknown cave creature and you run out of the cave. The mountain is at least closer to you now, so you decide it will be worthwhile to check it out. Your stomach grumbles again and you hope that you can possibly find some kind of food.')
         mountain()
 
-def fight2():
-    if player.health > 0 and new_health > 0: 
-                ee_result = np.subtract(e_result,player.attack)
-                print(f'You hit the creature! The creature\'s health is: {ee_result}')
-                pp_result = np.subtract(p_result,new_attack)
-                print(f'The creature hit you! Your health is now: {pp_result}')
-    else: death()
+def leave():
+    choice8 = input(
+        'Go left to the mountain or go right to the spaceship?(L/R)')
+    if choice8.lower() in left:
+       mountain()
+    else:
+        shipending()
 
 def death():
     print('you died')
 
+def shipending():
+    print('You decide to hike back to your space craft to see if there is anything that could possibly help you get home. You make it back to the crash site and slowly walk around the area, avoiding jagged pieces of metal sticking up from the sand. As you walk around you hear a buzzing noise and walk towards it. You start digging in that area and uncover a radio.')
+    print('It\'s working! You frantically tune it and repeat your SOS message. You hear someone respond to you! You\'re bubbling with excitement! The command center lets you know that they are sending a rescue team to you and to stay put. You sit at the crash site and begin to feel tired. The warm sand lulls you to sleep.')
+    sent_home()
+
+
 def sent_home():
-    print('home story')
-# add functions for live and die endings
+    print('You wake up strapped down to a gurney in a large spaceship. You slowly lift your head and look around. You notice an IV in your arm and a blanket on top of you. A woman sitting near you stands and puts her hand on your shoulder. "You\'re safe now, everything will be ok". Relief washes over you and you nod. You quickly drift back to sleep, excited to finally get home')
+    end()
+
+def end():
+    print('The end')
 
 start()
