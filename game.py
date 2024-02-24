@@ -1,6 +1,7 @@
 # imports
 from rich import print
 import random
+import numpy as np
 
 # player input
 left = ["left", "Left", "L", "l"]
@@ -9,6 +10,8 @@ yes = ["Y", "y", "yes"]
 no = ["N", "n", "no"]
 inside = ["I", "i", "Inside", "inside"]
 outside = ["O", "o", "Outside", "outside"]
+attack = ["A", "a", "Attack", "attack"]
+flee = ["F", "f", "Flee", "flee"]
 
 # player and enemy set up
 class Traits():
@@ -178,59 +181,38 @@ def encounter():
 def approach():
     print('You decide to fight the creature. You are starving, desperate, and afraid of what will happen if you turn around to flee.')
     Traits.creature_health_gen()
-    # print("[red]Enemy\'s attack is: [/red]")
     Traits.creature_attack_gen()
-    # print correct stats based on chosen path
-    # if increased_player_health :player.add_health()
-    # else:
-    #     print(f'[bright_cyan]Your health is {player.health}[/bright_cyan]')
-    # if increased_player_attack : player.add_attack()
-    # else:
-    #     print(
-    #         f'[bright_cyan]Your attack power is {player.attack}[/bright_cyan]')
-    # fight()
+    fight()
 
 # create a function for enemy v player that accounts for increased stats and if health is <= 0
 
 # FIGHT CREATURE
 
-# def fight():
-#     if increased_player_health == True:
-#         # list out each hit from enemy
-#         if new_attack == 15:
-#             player.heatlh == 115
-#             print(f'You took {new_attack} damage')
-#             print(f'Your health is now {player.health}')
-#         elif new_attack == 20:
-#             player.heatlh == 110
-#             print(f'You took {new_attack} damage')
-#             print(f'Your health is now {player.health}')
-#         elif new_attack == 25:
-#             player.heatlh == 105
-#             print(f'You took {new_attack} damage')
-#             print(f'Your health is now {player.health}')
-#         elif new_attack == 30:
-#             player.heatlh == 100
-#             print(f'You took {new_attack} damage')
-#             print(f'Your health is now {player.health}')
-#         elif new_attack == 25:
-#             player.heatlh == 95
-#             print(f'You took {new_attack} damage')
-#             print(f'Your health is now {player.health}')
-#         else:
-#             player.heatlh == 90
-#         print(f'You took {new_attack} damage')
-#         print(f'Your health is now {player.health}')
-#     else:
-#         print('insert')
-#     if increased_player_attack == True:
-#         if new_attack == 40:
-#             print('same')
-#         else:
-#             print('player has higher attack')
-#     else:
-#         print('player has higher attack')
+def fight():
+        choice7 = input(
+        'Attack or flee? (A/F)')
+        if choice7.lower() in attack:
+            global e_result
+            e_result = np.subtract(new_health,player.attack)
+            print(f'You hit the creature! The creature\'s health is: {e_result}')
+            # player takes a hit
+            global p_result
+            p_result = np.subtract(player.health,new_attack)
+            print(f'The creature hit you! Your health is now: {p_result}')
+            fight2()
+        else: print('You decide that you are in no state to fight an unknown cave creature and you run out of the cave. The mountain is at least closer to you now, so you decide it will be worthwhile to check it out. Your stomach grumbles again and you hope that you can possibly find some kind of food.')
+        mountain()
 
+def fight2():
+    if player.health > 0 and new_health > 0: 
+                ee_result = np.subtract(e_result,player.attack)
+                print(f'You hit the creature! The creature\'s health is: {ee_result}')
+                pp_result = np.subtract(p_result,new_attack)
+                print(f'The creature hit you! Your health is now: {pp_result}')
+    else: death()
+
+def death():
+    print('you died')
 
 def sent_home():
     print('home story')
